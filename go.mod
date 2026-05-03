@@ -5,6 +5,7 @@ go 1.26.2
 tool (
 	github.com/evilmartians/lefthook
 	github.com/golangci/golangci-lint/cmd/golangci-lint
+	github.com/shuymn/pommitlint
 )
 
 require (
@@ -174,6 +175,7 @@ require (
 	github.com/sashamelentyev/usestdlibvars v1.28.0 // indirect
 	github.com/schollz/progressbar/v3 v3.18.0 // indirect
 	github.com/securego/gosec/v2 v2.22.2 // indirect
+	github.com/shuymn/pommitlint v1.1.2 // indirect
 	github.com/sirupsen/logrus v1.9.3 // indirect
 	github.com/sivchari/containedctx v1.0.3 // indirect
 	github.com/sivchari/tenv v1.12.1 // indirect

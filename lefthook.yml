@@ -1,0 +1,10 @@
+pre-commit:
+  parallel: true
+  commands:
+    golangci-lint:
+      run: go tool golangci-lint run ./...
+
+commit-msg:
+  commands:
+    conventional-commit:
+      run: go tool pommitlint lint --edit {1}

@@ -20,7 +20,7 @@ const (
 
 func judgeWeather(weather *WeatherResponse) Rainwear {
 	departureTime := getEnvInt(os.Getenv("DEPARTURE_TIME"))
-	// 12時間先までの降水量と風速を確認する
+	// 12時間先までの風速を確認する
 	checkHours := departureTime + 12
 	// 同日まで確認可能とする
 	if checkHours > 24 {

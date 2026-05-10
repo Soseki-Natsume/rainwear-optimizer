@@ -18,8 +18,11 @@ const (
 	msToKmh = 3.6 // m/s*3.6 = km/h
 )
 
-func judgeWeather(weather *WeatherResponse) Rainwear {
-	departureTime := getEnvInt(os.Getenv("DEPARTURE_TIME"))
+func judgeWeather(weather *WeatherResponse) (Rainwear, error) {
+	departureTime, err := getEnvInt(os.Getenv("DEPARTURE_TIME"))
+	if err != nil {
+		return unnecessary, err
+	}
 	// 12時間先までの風速を確認する
 	checkHours := departureTime + 12
 	// 同日まで確認可能とする
@@ -34,11 +37,11 @@ func judgeWeather(weather *WeatherResponse) Rainwear {
 	// 40-49: fog or ice fog
 	// 上記以外は大体雨
 	if weatherCode < 20 || weatherCode >= 30 && weatherCode < 36 || weatherCode >= 40 && weatherCode < 50 {
-		return unnecessary
+		return unnecessary, nil
 	}
 	// 70-79: solid precipitation not in showers
 	if weatherCode >= 70 && weatherCode < 80 {
-		return umbrella
+		return umbrella, nil
 	}
 
 	maxWindSpeed10m := weather.Hourly.WindSpeed10m[departureTime]
@@ -52,18 +55,18 @@ func judgeWeather(weather *WeatherResponse) Rainwear {
 
 	// APIで取得できるのはkm/hなので、m/sをkm/hに変換して比較
 	if maxWindSpeed10m <= 3.0*msToKmh {
-		return foldingUmbrella
+		return foldingUmbrella, nil
 	} else if maxWindSpeed10m <= 7.0*msToKmh {
-		return umbrella
+		return umbrella, nil
 	} else {
-		return raincoat
+		return raincoat, nil
 	}
 }
 
-func getEnvInt(stringValue string) int {
+func getEnvInt(stringValue string) (int, error) {
 	intValue, err := strconv.Atoi(stringValue)
 	if err != nil {
-		return 0
+		return 0, err
 	}
-	return intValue
+	return intValue, nil
 }

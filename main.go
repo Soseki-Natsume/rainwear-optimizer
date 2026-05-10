@@ -3,8 +3,8 @@ package main
 import (
 	"fmt"
 	"os"
-	"strconv"
 
+	"github.com/Soseki-Natsume/rainwear-optimizer/utils"
 	"github.com/joho/godotenv"
 )
 
@@ -14,12 +14,12 @@ func main() {
 	var config WeatherConfig
 	var err error
 
-	config.Latitude, err = getEnvFloat(os.Getenv("APP_LAT"))
+	config.Latitude, err = utils.GetEnvFloat(os.Getenv("APP_LAT"))
 	if err != nil {
 		fmt.Println(err)
 		return
 	}
-	config.Longitude, err = getEnvFloat(os.Getenv("APP_LON"))
+	config.Longitude, err = utils.GetEnvFloat(os.Getenv("APP_LON"))
 	if err != nil {
 		fmt.Println(err)
 		return
@@ -33,12 +33,4 @@ func main() {
 	fmt.Println(weather.Hourly.WeatherCode)
 	fmt.Println(weather.Hourly.WindSpeed10m)
 	fmt.Println(judgeWeather(weather))
-}
-
-func getEnvFloat(stringValue string) (float64, error) {
-	float64Value, err := strconv.ParseFloat(stringValue, 64)
-	if err != nil {
-		return 0, err
-	}
-	return float64Value, nil
 }

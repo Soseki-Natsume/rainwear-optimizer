@@ -2,7 +2,8 @@ package main
 
 import (
 	"os"
-	"strconv"
+
+	"github.com/Soseki-Natsume/rainwear-optimizer/utils"
 )
 
 type Rainwear string
@@ -19,7 +20,7 @@ const (
 )
 
 func judgeWeather(weather *WeatherResponse) (Rainwear, error) {
-	departureTime, err := getEnvInt(os.Getenv("DEPARTURE_TIME"))
+	departureTime, err := utils.GetEnvInt(os.Getenv("DEPARTURE_TIME"))
 	if err != nil {
 		return unnecessary, err
 	}
@@ -61,12 +62,4 @@ func judgeWeather(weather *WeatherResponse) (Rainwear, error) {
 	} else {
 		return raincoat, nil
 	}
-}
-
-func getEnvInt(stringValue string) (int, error) {
-	intValue, err := strconv.Atoi(stringValue)
-	if err != nil {
-		return 0, err
-	}
-	return intValue, nil
 }

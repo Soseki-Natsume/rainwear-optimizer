@@ -12,9 +12,18 @@ func main() {
 	_ = godotenv.Load()
 
 	var config WeatherConfig
+	var err error
 
-	config.Latitude = getEnvFloat(os.Getenv("APP_LAT"))
-	config.Longitude = getEnvFloat(os.Getenv("APP_LON"))
+	config.Latitude, err = getEnvFloat(os.Getenv("APP_LAT"))
+	if err != nil {
+		fmt.Println(err)
+		return
+	}
+	config.Longitude, err = getEnvFloat(os.Getenv("APP_LON"))
+	if err != nil {
+		fmt.Println(err)
+		return
+	}
 
 	weather, err := fetchWeather(config.Latitude, config.Longitude)
 	if err != nil {
@@ -26,10 +35,10 @@ func main() {
 	fmt.Println(judgeWeather(weather))
 }
 
-func getEnvFloat(stringValue string) float64 {
+func getEnvFloat(stringValue string) (float64, error) {
 	float64Value, err := strconv.ParseFloat(stringValue, 64)
 	if err != nil {
-		return 0
+		return 0, err
 	}
-	return float64Value
+	return float64Value, nil
 }

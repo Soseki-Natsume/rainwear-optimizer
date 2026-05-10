@@ -21,7 +21,9 @@ func main() {
 		fmt.Println(err)
 		return
 	}
-	fmt.Println(weather)
+	fmt.Println(weather.Hourly.WeatherCode)
+	fmt.Println(weather.Hourly.WindSpeed10m)
+	fmt.Println(judgeWeather(weather))
 }
 
 func getEnvFloat(stringValue string) float64 {

@@ -7,7 +7,6 @@ import (
 )
 
 func fetchWeather(lat, lon float64) (*WeatherResponse, error) {
-	// timezoneは後に環境変数から取得するようにするが、一旦固定値で実装
 	url := fmt.Sprintf("https://api.open-meteo.com/v1/forecast?latitude=%f&longitude=%f&hourly=wind_speed_10m,precipitation_probability,precipitation,weather_code&timezone=Asia%%2FTokyo&past_days=0&forecast_days=1", lat, lon)
 	resp, err := http.Get(url)
 	if err != nil {
